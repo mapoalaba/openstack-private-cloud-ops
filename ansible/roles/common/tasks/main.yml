@@ -1,0 +1,43 @@
+- name: Update apt package cache
+  apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Upgrade packages
+  apt:
+    upgrade: dist
+
+- name: Install common packages
+  apt:
+    name:
+      - curl
+      - wget
+      - git
+      - vim
+      - net-tools
+      - htop
+      - unzip
+      - ca-certificates
+      - gnupg
+      - lsb-release
+    state: present
+
+- name: Create ops user
+  user:
+    name: ops
+    shell: /bin/bash
+    groups: sudo
+    append: true
+    create_home: true
+
+- name: Allow ops user to use sudo without password
+  copy:
+    dest: /etc/sudoers.d/ops
+    content: "ops ALL=(ALL) NOPASSWD:ALL\n"
+    owner: root
+    group: root
+    mode: "0440"
+
+- name: Set timezone to Asia/Seoul
+  timezone:
+    name: Asia/Seoul

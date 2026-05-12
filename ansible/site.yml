@@ -1,0 +1,12 @@
+- name: Configure all OpenStack lab servers
+  hosts: all_servers
+  become: true
+  roles:
+    - common
+    - node_exporter
+
+- name: Configure web servers
+  hosts: web
+  become: true
+  roles:
+    - nginx
