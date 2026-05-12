@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# Logs
+logs/
+*.log
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+
+# Temporary files
+*.tmp
+
+# OpenStack credentials
+*-openrc
+clouds.yaml
+secure.yaml
