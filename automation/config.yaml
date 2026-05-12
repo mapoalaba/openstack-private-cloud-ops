@@ -1,0 +1,16 @@
+openstack:
+  openrc_path: "./demo-openrc"
+
+health_check:
+  expected_status: "ACTIVE"
+  target_servers:
+    - web-01
+    - db-01
+    - monitor-01
+    - test-01
+
+recovery:
+  enabled: false
+
+log:
+  path: "./logs/vm-health-check.log"
