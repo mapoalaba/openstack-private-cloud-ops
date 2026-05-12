@@ -6,6 +6,7 @@ from typing import Dict, List
 import yaml
 
 from openstack_client import OpenStackClient, OpenStackCommandError
+from auto_recovery import recover_vm
 
 
 def load_config(config_path: str) -> Dict:
@@ -63,6 +64,7 @@ def check_vm_health(config_path: str) -> int:
     openrc_path = config["openstack"]["openrc_path"]
     expected_status = config["health_check"]["expected_status"]
     target_servers = config["health_check"]["target_servers"]
+    recovery_enabled = config["recovery"]["enabled"]
     log_path = config["log"]["path"]
 
     client = OpenStackClient(openrc_path=openrc_path)
@@ -101,6 +103,18 @@ def check_vm_health(config_path: str) -> int:
                 log_path,
                 f"[ACTION_REQUIRED] {target} needs recovery"
             )
+
+            if recovery_enabled:
+                recovery_result = recover_vm(
+                    config_path=config_path,
+                    server_name=target,
+                    detected_status=status,
+                )
+
+                write_log(
+                    log_path,
+                    f"[RECOVERY_RESULT] {target} recovery exit code: {recovery_result}"
+                )
 
     write_log(log_path, "Finished VM health check")
 

@@ -10,7 +10,13 @@ health_check:
     - test-01
 
 recovery:
-  enabled: false
+  enabled: true
+  wait_seconds: 10
+  max_retry: 3
 
 log:
   path: "./logs/vm-health-check.log"
+  recovery_path: "./logs/recovery.log"
+
+report:
+  path: "./reports"
