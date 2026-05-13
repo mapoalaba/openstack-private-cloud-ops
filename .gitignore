@@ -20,5 +20,12 @@ logs/
 
 # OpenStack credentials
 *-openrc
+demo-openrc
 clouds.yaml
 secure.yaml
+
+# SSH keys
+*.pem
+*.key
+id_rsa
+id_rsa.pub
